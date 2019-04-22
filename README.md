@@ -26,20 +26,24 @@ The Name game is developed using the Spring boot framework with following packag
 Application has been kept intentionally simple to be able to develop a meaningful content in the suggested timeframe. My limited familiarity/unfamiliarity with the tools used (Spring boot, Spring security, JPA Maven, Postman etc.,) is one of the key reasons for keeping it simple.
 
 Authentication/Authorization
+
 Spring authentication is used to authenticate and authorize (there is only one ROLE) users with in-memory authentication (hard coded list of users). Authentication uses a form login. To login, post username and password to following API
 http://localhost:8080/thenamegame/login
 Post to following URL to logout: http://localhost:8080/thenamegame/logout
 
 Hardcoded username/passwords: user1/user1, user2/user2, user3/user3, user4/user4 and user5/user5
+
 This cannot be used in a production system. This needs to extended to get user detail from a data store. 
 
 
 API
+
 Application provides auto-generated API documentation using Swagger2. With default application configuration, API documentation can be viewed at 
 http://localhost:8080/thenamegame/swagger-ui.html
 Postman Collection: API sample calls provided in the Postman collection file “The Name Game API.postman_collection.json”
 
 API Listing:
+
 GET /v1/challenge – Get a challenge to identify coworkers
 GET /v1/mattchallenge – Get a Matt challenge (only coworkers with “Mat” in name) to identify coworkers
 POST /v1/guess – Post user guess for the current challenge
