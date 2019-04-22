@@ -1,4 +1,4 @@
-# thenamegame
+# The Name Game
 The Name Game API
 by Raj Thuppanna
 
