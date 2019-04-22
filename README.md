@@ -45,11 +45,17 @@ Postman Collection: API sample calls provided in the Postman collection file “
 API Listing:
 
 GET /v1/challenge – Get a challenge to identify coworkers
+
 GET /v1/mattchallenge – Get a Matt challenge (only coworkers with “Mat” in name) to identify coworkers
+
 POST /v1/guess – Post user guess for the current challenge
+
 GET /v1/sessionStats – Get user statistics for current session
+
 GET /v1/userStats – Get complete user statistics 
+
 POST /login – Login with username and password form parameters
+
 POST /logout – Logout
 
 
