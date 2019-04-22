@@ -19,9 +19,12 @@ http://localhost:8080/thenamegame/
 API sample calls provided in the Postman collection file “The Name Game API.postman_collection.json” can be used to view and run sample API calls. Client UI is not provided.
 
 
-Design 
+Design
+
 The Name game is developed using the Spring boot framework with following packaged dependencies - Spring Web, Spring security, Jakson, Lombok and Swagger2.
+
 Application has been kept intentionally simple to be able to develop a meaningful content in the suggested timeframe. My limited familiarity/unfamiliarity with the tools used (Spring boot, Spring security, JPA Maven, Postman etc.,) is one of the key reasons for keeping it simple.
+
 Authentication/Authorization
 Spring authentication is used to authenticate and authorize (there is only one ROLE) users with in-memory authentication (hard coded list of users). Authentication uses a form login. To login, post username and password to following API
 http://localhost:8080/thenamegame/login
@@ -30,10 +33,12 @@ Post to following URL to logout: http://localhost:8080/thenamegame/logout
 Hardcoded username/passwords: user1/user1, user2/user2, user3/user3, user4/user4 and user5/user5
 This cannot be used in a production system. This needs to extended to get user detail from a data store. 
 
+
 API
 Application provides auto-generated API documentation using Swagger2. With default application configuration, API documentation can be viewed at 
 http://localhost:8080/thenamegame/swagger-ui.html
 Postman Collection: API sample calls provided in the Postman collection file “The Name Game API.postman_collection.json”
+
 API Listing:
 GET /v1/challenge – Get a challenge to identify coworkers
 GET /v1/mattchallenge – Get a Matt challenge (only coworkers with “Mat” in name) to identify coworkers
@@ -43,13 +48,19 @@ GET /v1/userStats – Get complete user statistics
 POST /login – Login with username and password form parameters
 POST /logout – Logout
 
+
 Key classes
+
 ChallengeService (Implemented in ChallengeServiceImpl) is designed to encapsulate the logic for the game. It uses EmployeeProfileService to get Employee profiles and uses CachingService to cache Questions submitted to users and user statistics. 
 NameGameController class implements all API provided by the application.
 Storage
+
 External storage is not used to keep the application simple. Application uses users session and static variables to hold application data. Ideally data such as profile records, user lifetime statistics should be stored in a relational database. Session data such as user statistics for the session can be stored in in-memory databases such as Redis and shared across instances of the application.
+
 Configuration
+
 Application configuration data is locally stored in application.properties file. This could be captured and served using a independent configuration so the configuration can be shared across multiple instances of the application.
 Scaling
+
 Application does not scale as is. Making the changes discussed in storage and configuration sections would make the application scale very well.
 
