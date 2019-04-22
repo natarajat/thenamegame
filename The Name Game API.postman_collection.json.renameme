@@ -1,0 +1,407 @@
+{
+	"info": {
+		"_postman_id": "f6c6d83d-47d6-4ce0-8e98-41c0986dec8f",
+		"name": "The Name Game API",
+		"description": "One user playing the game",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "user1",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "user",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/thenamegame/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"thenamegame",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get next challenge",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7841f104-acf5-428f-a3c4-a39b05e3c18a",
+						"exec": [
+							"",
+							"pm.environment.set(\"currentChallengeID\", pm.response.json().challengeId );",
+							"pm.environment.set(\"userChoiceForCurrentChallenge\", pm.response.json().challengeOptions[0].profileId);",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8080/thenamegame/v1/challenge",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"thenamegame",
+						"v1",
+						"challenge"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Answer last challenge",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "841b558b-dd21-4f54-aac2-d0cf62f78ea1",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n\t\"challengeId\": \"{{currentChallengeID}}\" , \n\t\"selectedProfileId\": \"{{userChoiceForCurrentChallenge}}\"\n}\n\n"
+				},
+				"url": {
+					"raw": "localhost:8080/thenamegame/v1/answer",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"thenamegame",
+						"v1",
+						"answer"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Answer challenge",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \n\t\"challengeId\": {{currentChallengeID}}, \n\t\"selectedProfileId\": {{userChoiceForCurrentChallenge}}\n}\n\n"
+						},
+						"url": {
+							"raw": "localhost:8080/thenamegame/v1/answer",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"thenamegame",
+								"v1",
+								"answer"
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json;charset=UTF-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 20 Apr 2019 17:32:02 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"timestamp\": \"2019-04-20T17:32:01.981+0000\",\n    \"status\": 500,\n    \"error\": \"Internal Server Error\",\n    \"message\": \"No message available\",\n    \"trace\": \"java.lang.NullPointerException\\r\\n\\tat com.mypocs.thenamegame.service.ChallengeServiceImpl.validateClientChallengeResponse(ChallengeServiceImpl.java:74)\\r\\n\\tat com.mypocs.thenamegame.controller.NameGameController.answer(NameGameController.java:49)\\r\\n\\tat sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\\r\\n\\tat sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)\\r\\n\\tat sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)\\r\\n\\tat java.lang.reflect.Method.invoke(Unknown Source)\\r\\n\\tat org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:189)\\r\\n\\tat org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:138)\\r\\n\\tat org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:102)\\r\\n\\tat org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:892)\\r\\n\\tat org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:797)\\r\\n\\tat org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)\\r\\n\\tat org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1038)\\r\\n\\tat org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:942)\\r\\n\\tat org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1005)\\r\\n\\tat org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:908)\\r\\n\\tat javax.servlet.http.HttpServlet.service(HttpServlet.java:660)\\r\\n\\tat org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:882)\\r\\n\\tat javax.servlet.http.HttpServlet.service(HttpServlet.java:741)\\r\\n\\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)\\r\\n\\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)\\r\\n\\tat org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)\\r\\n\\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)\\r\\n\\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)\\r\\n\\tat org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:99)\\r\\n\\tat org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)\\r\\n\\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)\\r\\n\\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)\\r\\n\\tat org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:92)\\r\\n\\tat org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)\\r\\n\\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)\\r\\n\\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)\\r\\n\\tat org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:93)\\r\\n\\tat org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)\\r\\n\\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)\\r\\n\\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)\\r\\n\\tat org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:200)\\r\\n\\tat org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)\\r\\n\\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)\\r\\n\\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)\\r\\n\\tat org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:200)\\r\\n\\tat org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)\\r\\n\\tat org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:490)\\r\\n\\tat org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:139)\\r\\n\\tat org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)\\r\\n\\tat org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)\\r\\n\\tat org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343)\\r\\n\\tat org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:408)\\r\\n\\tat org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)\\r\\n\\tat org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:834)\\r\\n\\tat org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1415)\\r\\n\\tat org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)\\r\\n\\tat java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)\\r\\n\\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)\\r\\n\\tat org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)\\r\\n\\tat java.lang.Thread.run(Unknown Source)\\r\\n\",\n    \"path\": \"/thenamegame/v1/answer\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get next Matt challenge",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7841f104-acf5-428f-a3c4-a39b05e3c18a",
+						"exec": [
+							"",
+							"pm.environment.set(\"currentChallengeID\", pm.response.json().challengeId );",
+							"pm.environment.set(\"userChoiceForCurrentChallenge\", pm.response.json().challengeOptions[0].profileId);",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8080/thenamegame/v1/challenge",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"thenamegame",
+						"v1",
+						"challenge"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Answer last challenge",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "841b558b-dd21-4f54-aac2-d0cf62f78ea1",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n\t\"challengeId\": \"{{currentChallengeID}}\" , \n\t\"selectedProfileId\": \"{{userChoiceForCurrentChallenge}}\"\n}\n\n"
+				},
+				"url": {
+					"raw": "localhost:8080/thenamegame/v1/guess",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"thenamegame",
+						"v1",
+						"guess"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Answer challenge",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \n\t\"challengeId\": {{currentChallengeID}}, \n\t\"selectedProfileId\": {{userChoiceForCurrentChallenge}}\n}\n\n"
+						},
+						"url": {
+							"raw": "localhost:8080/thenamegame/v1/answer",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"thenamegame",
+								"v1",
+								"answer"
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json;charset=UTF-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 20 Apr 2019 17:32:02 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"timestamp\": \"2019-04-20T17:32:01.981+0000\",\n    \"status\": 500,\n    \"error\": \"Internal Server Error\",\n    \"message\": \"No message available\",\n    \"trace\": \"java.lang.NullPointerException\\r\\n\\tat com.mypocs.thenamegame.service.ChallengeServiceImpl.validateClientChallengeResponse(ChallengeServiceImpl.java:74)\\r\\n\\tat com.mypocs.thenamegame.controller.NameGameController.answer(NameGameController.java:49)\\r\\n\\tat sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\\r\\n\\tat sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)\\r\\n\\tat sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)\\r\\n\\tat java.lang.reflect.Method.invoke(Unknown Source)\\r\\n\\tat org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:189)\\r\\n\\tat org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:138)\\r\\n\\tat org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:102)\\r\\n\\tat org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:892)\\r\\n\\tat org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:797)\\r\\n\\tat org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)\\r\\n\\tat org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1038)\\r\\n\\tat org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:942)\\r\\n\\tat org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1005)\\r\\n\\tat org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:908)\\r\\n\\tat javax.servlet.http.HttpServlet.service(HttpServlet.java:660)\\r\\n\\tat org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:882)\\r\\n\\tat javax.servlet.http.HttpServlet.service(HttpServlet.java:741)\\r\\n\\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)\\r\\n\\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)\\r\\n\\tat org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)\\r\\n\\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)\\r\\n\\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)\\r\\n\\tat org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:99)\\r\\n\\tat org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)\\r\\n\\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)\\r\\n\\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)\\r\\n\\tat org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:92)\\r\\n\\tat org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)\\r\\n\\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)\\r\\n\\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)\\r\\n\\tat org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:93)\\r\\n\\tat org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)\\r\\n\\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)\\r\\n\\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)\\r\\n\\tat org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:200)\\r\\n\\tat org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)\\r\\n\\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)\\r\\n\\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)\\r\\n\\tat org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:200)\\r\\n\\tat org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)\\r\\n\\tat org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:490)\\r\\n\\tat org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:139)\\r\\n\\tat org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)\\r\\n\\tat org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)\\r\\n\\tat org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343)\\r\\n\\tat org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:408)\\r\\n\\tat org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)\\r\\n\\tat org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:834)\\r\\n\\tat org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1415)\\r\\n\\tat org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)\\r\\n\\tat java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)\\r\\n\\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)\\r\\n\\tat org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)\\r\\n\\tat java.lang.Thread.run(Unknown Source)\\r\\n\",\n    \"path\": \"/thenamegame/v1/answer\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get Session Stats",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8080/thenamegame/v1/stats",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"thenamegame",
+						"v1",
+						"stats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User Stats",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8080/thenamegame/v1/stats",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"thenamegame",
+						"v1",
+						"stats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "2524ff59-3d53-465f-8904-d814294aa806",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "4faaa888-3459-4f8e-986a-e810e42d916f",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
